@@ -3,7 +3,7 @@ import master_pb2
 import master_pb2_grpc
 
 def register_with_master():
-    channel = grpc.insecure_channel("grpc_master:50051")
+    channel = grpc.insecure_channel("10.1.2.151:8888")
     stub = master_pb2_grpc.MasterStub(channel)
 
     # Registro con el Master
