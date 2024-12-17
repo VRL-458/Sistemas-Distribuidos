@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  master:
+    build:
+      context: .           # Contexto en la raíz del proyecto
+      dockerfile: master/Dockerfile
+    container_name: grpc_master
+    ports:
+      - "50051:50051"
+    networks:
+      - red-gRPC
+    restart: always
+
+networks:
+  red-gRPC:  
+    name: red-gRPC              # Declaración explícita de la red
+    driver: bridge         # Tipo de red (por defecto es bridge)

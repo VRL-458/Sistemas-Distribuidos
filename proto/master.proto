@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+service Master {
+    rpc RegisterWorker (RegisterWorkerRequest) returns (RegisterWorkerResponse);
+    rpc Log (LogRequest) returns (LogResponse);
+}
+
+message RegisterWorkerRequest {}
+
+message RegisterWorkerResponse {
+    string worker_id = 1;  // ID único para el Worker
+}
+
+message LogRequest {
+    string worker_id = 1;   // ID del Worker
+    string sensor_id = 2;   // ID del ESP32 que envió la tarea
+    float freq = 3;         // Frecuencia asignada
+    int32 iteration = 4;    // Número de iteraciones asignadas
+}
+
+message LogResponse {
+    string status = 1;      // Estado de la operación ("OK" o "ERROR")
+}
