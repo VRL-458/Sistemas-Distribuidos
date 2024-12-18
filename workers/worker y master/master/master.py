@@ -42,12 +42,12 @@ class MasterServicer(master_pb2_grpc.MasterServicer):
 
     def RegisterWorker(self, request, context):
         # Generar un nuevo Worker ID basado en la longitud de la lista en Redis
-        worker_id = f"worker_{redis_client.llen(self.worker_list_key) + 1}"
+        worker_id = request.worker_id
 
         # Guardar el Worker ID en Redis
         redis_client.rpush(self.worker_list_key, worker_id)
         print(f"Worker registrado: {worker_id}")
-        return master_pb2.RegisterWorkerResponse(worker_id=worker_id)
+        return master_pb2.RegisterWorkerResponse(status="OK")
 
     def Log(self, request, context):
         # Procesar un log de un Worker

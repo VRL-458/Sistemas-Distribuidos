@@ -35,12 +35,12 @@ class MasterStub(object):
             channel: A grpc.Channel.
         """
         self.RegisterWorker = channel.unary_unary(
-                '/Master/RegisterWorker',
+                '/master.Master/RegisterWorker',
                 request_serializer=master__pb2.RegisterWorkerRequest.SerializeToString,
                 response_deserializer=master__pb2.RegisterWorkerResponse.FromString,
                 _registered_method=True)
         self.Log = channel.unary_unary(
-                '/Master/Log',
+                '/master.Master/Log',
                 request_serializer=master__pb2.LogRequest.SerializeToString,
                 response_deserializer=master__pb2.LogResponse.FromString,
                 _registered_method=True)
@@ -76,9 +76,9 @@ def add_MasterServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'Master', rpc_method_handlers)
+            'master.Master', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('Master', rpc_method_handlers)
+    server.add_registered_method_handlers('master.Master', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -99,7 +99,7 @@ class Master(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/Master/RegisterWorker',
+            '/master.Master/RegisterWorker',
             master__pb2.RegisterWorkerRequest.SerializeToString,
             master__pb2.RegisterWorkerResponse.FromString,
             options,
@@ -126,7 +126,7 @@ class Master(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/Master/Log',
+            '/master.Master/Log',
             master__pb2.LogRequest.SerializeToString,
             master__pb2.LogResponse.FromString,
             options,

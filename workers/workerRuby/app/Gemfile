@@ -2,3 +2,5 @@ source 'https://rubygems.org'
 
 gem 'grpc', '1.54.0'
 gem 'google-protobuf', '3.21.12'
+gem 'mqtt', '~> 0.6'  # MQTT
+gem 'json'

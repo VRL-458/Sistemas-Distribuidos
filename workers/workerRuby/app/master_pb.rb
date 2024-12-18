@@ -4,23 +4,26 @@
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
-  add_message "RegisterWorkerRequest" do
-  end
-  add_message "RegisterWorkerResponse" do
+  add_message "master.RegisterWorkerRequest" do
     optional :worker_id, :string, 1
   end
-  add_message "LogRequest" do
+  add_message "master.RegisterWorkerResponse" do
+    optional :status, :string, 1
+  end
+  add_message "master.LogRequest" do
     optional :worker_id, :string, 1
     optional :sensor_id, :string, 2
     optional :freq, :float, 3
     optional :iteration, :int32, 4
   end
-  add_message "LogResponse" do
+  add_message "master.LogResponse" do
     optional :status, :string, 1
   end
 end
 
-RegisterWorkerRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("RegisterWorkerRequest").msgclass
-RegisterWorkerResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("RegisterWorkerResponse").msgclass
-LogRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("LogRequest").msgclass
-LogResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("LogResponse").msgclass
+module Master
+  RegisterWorkerRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("master.RegisterWorkerRequest").msgclass
+  RegisterWorkerResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("master.RegisterWorkerResponse").msgclass
+  LogRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("master.LogRequest").msgclass
+  LogResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("master.LogResponse").msgclass
+end

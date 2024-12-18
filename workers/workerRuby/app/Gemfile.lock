@@ -7,6 +7,8 @@ GEM
     grpc (1.54.0-x86_64-linux)
       google-protobuf (~> 3.21)
       googleapis-common-protos-types (~> 1.0)
+    json (2.9.0)
+    mqtt (0.6.0)
 
 PLATFORMS
   x86_64-linux
@@ -14,6 +16,8 @@ PLATFORMS
 DEPENDENCIES
   google-protobuf (= 3.21.12)
   grpc (= 1.54.0)
+  json
+  mqtt (~> 0.6)
 
 BUNDLED WITH
    2.2.3

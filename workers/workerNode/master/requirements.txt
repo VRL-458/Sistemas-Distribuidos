@@ -1,3 +1,4 @@
 grpcio
 grpcio-tools
 paho-mqtt
+redis

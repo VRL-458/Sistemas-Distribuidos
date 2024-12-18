@@ -24,21 +24,21 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cmaster.proto\"\x17\n\x15RegisterWorkerRequest\"+\n\x16RegisterWorkerResponse\x12\x11\n\tworker_id\x18\x01 \x01(\t\"S\n\nLogRequest\x12\x11\n\tworker_id\x18\x01 \x01(\t\x12\x11\n\tsensor_id\x18\x02 \x01(\t\x12\x0c\n\x04\x66req\x18\x03 \x01(\x02\x12\x11\n\titeration\x18\x04 \x01(\x05\"\x1d\n\x0bLogResponse\x12\x0e\n\x06status\x18\x01 \x01(\t2m\n\x06Master\x12\x41\n\x0eRegisterWorker\x12\x16.RegisterWorkerRequest\x1a\x17.RegisterWorkerResponse\x12 \n\x03Log\x12\x0b.LogRequest\x1a\x0c.LogResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cmaster.proto\x12\x06master\"\x17\n\x15RegisterWorkerRequest\"+\n\x16RegisterWorkerResponse\x12\x11\n\tworker_id\x18\x01 \x01(\t\"S\n\nLogRequest\x12\x11\n\tworker_id\x18\x01 \x01(\t\x12\x11\n\tsensor_id\x18\x02 \x01(\t\x12\x0c\n\x04\x66req\x18\x03 \x01(\x02\x12\x11\n\titeration\x18\x04 \x01(\x05\"\x1d\n\x0bLogResponse\x12\x0e\n\x06status\x18\x01 \x01(\t2\x89\x01\n\x06Master\x12O\n\x0eRegisterWorker\x12\x1d.master.RegisterWorkerRequest\x1a\x1e.master.RegisterWorkerResponse\x12.\n\x03Log\x12\x12.master.LogRequest\x1a\x13.master.LogResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'master_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_REGISTERWORKERREQUEST']._serialized_start=16
-  _globals['_REGISTERWORKERREQUEST']._serialized_end=39
-  _globals['_REGISTERWORKERRESPONSE']._serialized_start=41
-  _globals['_REGISTERWORKERRESPONSE']._serialized_end=84
-  _globals['_LOGREQUEST']._serialized_start=86
-  _globals['_LOGREQUEST']._serialized_end=169
-  _globals['_LOGRESPONSE']._serialized_start=171
-  _globals['_LOGRESPONSE']._serialized_end=200
-  _globals['_MASTER']._serialized_start=202
-  _globals['_MASTER']._serialized_end=311
+  _globals['_REGISTERWORKERREQUEST']._serialized_start=24
+  _globals['_REGISTERWORKERREQUEST']._serialized_end=47
+  _globals['_REGISTERWORKERRESPONSE']._serialized_start=49
+  _globals['_REGISTERWORKERRESPONSE']._serialized_end=92
+  _globals['_LOGREQUEST']._serialized_start=94
+  _globals['_LOGREQUEST']._serialized_end=177
+  _globals['_LOGRESPONSE']._serialized_start=179
+  _globals['_LOGRESPONSE']._serialized_end=208
+  _globals['_MASTER']._serialized_start=211
+  _globals['_MASTER']._serialized_end=348
 # @@protoc_insertion_point(module_scope)
