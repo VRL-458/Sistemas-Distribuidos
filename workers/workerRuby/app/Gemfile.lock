@@ -1,0 +1,19 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    google-protobuf (3.21.12-x86_64-linux)
+    googleapis-common-protos-types (1.16.0)
+      google-protobuf (>= 3.18, < 5.a)
+    grpc (1.54.0-x86_64-linux)
+      google-protobuf (~> 3.21)
+      googleapis-common-protos-types (~> 1.0)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  google-protobuf (= 3.21.12)
+  grpc (= 1.54.0)
+
+BUNDLED WITH
+   2.2.3

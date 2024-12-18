@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+service Master {
+    rpc RegisterWorker (RegisterWorkerRequest) returns (RegisterWorkerResponse);
+    rpc Log (LogRequest) returns (LogResponse);
+}
+
+message RegisterWorkerRequest {}
+
+message RegisterWorkerResponse {
+    string worker_id = 1;  
+}
+
+message LogRequest {
+    string worker_id = 1;   
+    string sensor_id = 2;  
+    float freq = 3;         
+    int32 iteration = 4;   
+}
+
+message LogResponse {
+    string status = 1;     
+}
