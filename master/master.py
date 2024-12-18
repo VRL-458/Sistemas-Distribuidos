@@ -25,8 +25,8 @@ class MasterServicer(master_pb2_grpc.MasterServicer):
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     master_pb2_grpc.add_MasterServicer_to_server(MasterServicer(), server)
-    server.add_insecure_port("[::]:50051")
-    print("Servidor Master en ejecución en el puerto 50051")
+    server.add_insecure_port("[::]:8888")
+    print("Servidor Master en ejecución en el puerto 8888")
     server.start()
     server.wait_for_termination()
 

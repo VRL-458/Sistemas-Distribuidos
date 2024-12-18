@@ -21,7 +21,7 @@ RUN python3 -m grpc_tools.protoc -I=./proto --python_out=. --grpc_python_out=. .
 COPY master/master.py .
 
 # Expone el puerto 50051 para gRPC
-EXPOSE 50051
+EXPOSE 8888
 
 # Comando para ejecutar el servidor Master
 CMD ["python", "master.py"]

@@ -34,4 +34,4 @@ services:
 
 networks:
   red-gRPC:
-    driver: bridge
+    external: true
