@@ -8,12 +8,12 @@ import redis  # Biblioteca para interactuar con Redis
 import threading
 
 # Configuración MQTT
-BROKER = "research.upb.edu"
+BROKER = "10.1.2.151"
 TOPIC_REQUEST = "upb/master/request"
 TOPIC_RESPONSE = "upb/master/response"
 
 # Configuración Redis
-REDIS_HOST = "localhost"
+REDIS_HOST = "10.1.2.151"
 REDIS_PORT = 6379
 redis_client = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
 

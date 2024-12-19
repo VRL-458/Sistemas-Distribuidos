@@ -14,7 +14,7 @@ COPY master/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia la carpeta proto y genera los archivos gRPC
-COPY proto ./proto
+COPY master/proto ./proto
 RUN python3 -m grpc_tools.protoc -I=./proto --python_out=. --grpc_python_out=. ./proto/master.proto
 
 # Copia el resto del código del servidor

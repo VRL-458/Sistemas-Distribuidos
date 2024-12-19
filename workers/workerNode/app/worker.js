@@ -3,8 +3,8 @@ const protoLoader = require('@grpc/proto-loader');
 const mqtt = require('mqtt');
 
 // Configuraciones de conexión
-const GRPC_SERVER = 'localhost:50051';
-const MQTT_BROKER = 'mqtt://research.upb.edu';
+const GRPC_SERVER = '10.1.2.51:50051';
+const MQTT_BROKER = 'mqtt://10.1.2.151';
 const PROTO_PATH = '../proto/master.proto';
 
 // Cargar la definición del .proto
