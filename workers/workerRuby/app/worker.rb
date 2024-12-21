@@ -3,6 +3,7 @@ require_relative 'master_pb'
 require_relative 'master_services_pb'
 require 'mqtt'
 require 'json'
+require 'socket'
 
 BROKER = 'mqtt'
 PORT = 1883
@@ -32,7 +33,7 @@ end
 # Función principal que ejecuta todo el flujo
 def main
   # Paso 1: Registro con el Master
-  worker_id = "bbb"
+  worker_id = Socket.gethostname
   stub = register_with_master(worker_id)
   
   # Paso 2: Configurar el cliente MQTT usando la gema 'mqtt'

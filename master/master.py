@@ -72,23 +72,24 @@ def on_message(client, userdata, msg):
     print(f"Mensaje recibido: Sensor ID: {sensor_id}, Worker ID: {worker_id}")
 
     # Asignar un Worker ID si no existe uno asignado
-    if worker_id == "":
-        if redis_client.llen(master.worker_list_key) > 0:
-            assigned_worker = redis_client.lpop(master.worker_list_key)
-            print(f"Asignando Worker ID: {assigned_worker} al Sensor ID: {sensor_id}")
 
-            # Responder al ESP32 con el Worker ID asignado
-            response = {
-                "sensor_id": sensor_id,
-                "worker_id": assigned_worker
-            }
-            client.publish(TOPIC_RESPONSE, json.dumps(response))
-        else:
-            print("No hay Workers disponibles en este momento.")
-    else:
+
+    if worker_id != "":
         # Reinserta el Worker ID en la lista de Redis si está en uso
         redis_client.rpush(master.worker_list_key, worker_id)
         print(f"Worker ID {worker_id} reintegrado a la lista de disponibles.")
+    if redis_client.llen(master.worker_list_key) > 0:
+        assigned_worker = redis_client.lpop(master.worker_list_key)
+        print(f"Asignando Worker ID: {assigned_worker} al Sensor ID: {sensor_id}")
+
+        # Responder al ESP32 con el Worker ID asignado
+        response = {
+            "sensor_id": sensor_id,
+            "worker_id": assigned_worker
+        }
+        client.publish(TOPIC_RESPONSE, json.dumps(response))
+    else:
+        print("No hay Workers disponibles en este momento.")
 
 # Servidor gRPC
 def serve_grpc(master):

@@ -1,6 +1,7 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const mqtt = require('mqtt');
+const os = require('os');
 
 // Configuraciones de conexión
 const GRPC_SERVER = 'master:8888';
@@ -71,7 +72,7 @@ function sendLog(grpcClient, workerId, sensorId, freq, iteration) {
 async function main() {
   try {
     // Crear una instancia de WorkerManager y registrar el Worker
-    const workerId = 'ccc'; // ID del Worker
+    const workerId = os.hostname(); // ID del Worker
     const workerManager = new WorkerManager(grpcClient);
     await workerManager.register(workerId);
 

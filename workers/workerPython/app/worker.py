@@ -4,8 +4,15 @@ import random
 import time
 import master_pb2
 import master_pb2_grpc
+import os
+import socket
+import json
 
 BROKER = "mqtt"  # Dirección del servidor MQTT
+
+def get_container_id():
+    return os.getenv('container_id', 'Unknown')
+
 
 def register_with_master(worker_id):
     """Registra el worker con el Master a través de gRPC y devuelve el ID y stub."""
@@ -51,12 +58,13 @@ def on_message(client, userdata, msg):
     # Publicar respuesta al ESP32 en el tópico correspondiente
     response_topic = f"upb/{worker_id}/response"
     response_message = {"freq": freq, "iteration": iteration}
-    client.publish(response_topic, str(response_message))
+    response_message_json = json.dumps(response_message)
+    client.publish(response_topic, response_message_json)
     print(f"Respuesta publicada en {response_topic}: {response_message}")
 
 def main():
     # Paso 1: Registrar el Worker con el Master
-    worker_id = "ID WORKER CONTAINER"
+    worker_id = socket.gethostname()
     stub = register_with_master(worker_id)
 
     # Paso 2: Configurar el cliente MQTT

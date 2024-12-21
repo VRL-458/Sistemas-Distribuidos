@@ -7,6 +7,8 @@ STACK_NAME="sistemas_distribuidos"               # Nombre del stack
 DOCKERFILE_PATH="master/Dockerfile"              # Ruta del Dockerfile
 
 # Paso: Construir la imagen Docker
+
+docker rmi -f $REGISTRY/$IMAGE_NAME
 echo "Construyendo la imagen Docker..."
 docker build -t $REGISTRY/$IMAGE_NAME:latest -f $DOCKERFILE_PATH .
 
