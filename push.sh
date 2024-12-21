@@ -3,7 +3,7 @@
 # Variables
 IMAGE_PYTHON="10.1.2.151:5000/worker_python"
 IMAGE_RUBY="10.1.2.151:5000/worker_ruby"
-IMAGE_NODEJS="10.1.2.151:5000/worker_nodejs"
+IMAGE_NODEJS="10.1.2.151:5000/worker_node"
 #IMAGE_C++="10.1.2.151:5000/worker_c++"
 
 # Eliminar imagen local

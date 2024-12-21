@@ -4,13 +4,13 @@ require_relative 'master_services_pb'
 require 'mqtt'
 require 'json'
 
-BROKER = 'research.upb.edu'
+BROKER = 'mqtt'
 PORT = 1883
 USE_SSL = false  # Cambiar a true si se requiere SSL
 
 # Registrar el Worker con el Master
 def register_with_master(worker_id)
-  stub = Master::Master::Stub.new('localhost:50051', :this_channel_is_insecure)
+  stub = Master::Master::Stub.new('master:8888', :this_channel_is_insecure)
   request = Master::RegisterWorkerRequest.new(worker_id: worker_id)
   response = stub.register_worker(request)
   puts "Worker registrado con ID: #{worker_id}"
@@ -79,3 +79,4 @@ def main
 end
 
 main if __FILE__ == $PROGRAM_NAME
+s

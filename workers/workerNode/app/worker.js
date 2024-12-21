@@ -3,9 +3,9 @@ const protoLoader = require('@grpc/proto-loader');
 const mqtt = require('mqtt');
 
 // Configuraciones de conexión
-const GRPC_SERVER = '10.1.2.51:50051';
-const MQTT_BROKER = 'mqtt://10.1.2.151';
-const PROTO_PATH = '../proto/master.proto';
+const GRPC_SERVER = 'master:8888';
+const MQTT_BROKER = 'mqtt://mqtt';
+const PROTO_PATH = './master.proto';
 
 // Cargar la definición del .proto
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {

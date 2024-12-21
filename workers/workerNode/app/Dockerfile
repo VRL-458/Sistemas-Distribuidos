@@ -14,7 +14,13 @@ RUN npm install
 COPY workers/workerNode/app/worker.js .
 COPY workers/workerNode/app/master_pb.js .
 COPY workers/workerNode/app/master_grpc_pb.js .
-COPY workers/workerNode/proto proto/
+COPY workers/workerNode/proto/master.proto .
+
+
+
+COPY wait_for_it/ ./wait_for_it
 
 # Comando para ejecutar el worker
-CMD ["node", "worker.js"]
+
+CMD ["sh", "-c", "wait_for_it/wait-for-it.sh master:8888 --timeout=50 --strict && node worker.js"]
+#CMD ["node", "worker.js"]

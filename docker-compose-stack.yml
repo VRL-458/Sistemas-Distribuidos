@@ -12,6 +12,36 @@ services:
         constraints:
           - node.role == manager
 
+  worker_python:
+    image: 10.1.2.151:5000/worker_python
+    networks:
+      - red-gRPC
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == worker
+
+  worker_ruby:
+    image: 10.1.2.151:5000/worker_ruby
+    networks:
+     - red-gRPC
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == worker
+
+  worker_node:
+    image: 10.1.2.151:5000/worker_node
+    networks:
+     - red-gRPC
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == worker
+
   redis:
     image: redis:latest
     ports:

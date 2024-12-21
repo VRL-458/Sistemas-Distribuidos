@@ -5,11 +5,11 @@ import time
 import master_pb2
 import master_pb2_grpc
 
-BROKER = "10.1.2.151"  # Dirección del servidor MQTT
+BROKER = "mqtt"  # Dirección del servidor MQTT
 
 def register_with_master(worker_id):
     """Registra el worker con el Master a través de gRPC y devuelve el ID y stub."""
-    channel = grpc.insecure_channel("10.1.2.1:50051")
+    channel = grpc.insecure_channel("master:8888")
     stub = master_pb2_grpc.MasterStub(channel)
 
     # Registro con el Master

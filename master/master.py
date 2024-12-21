@@ -8,12 +8,13 @@ import redis  # Biblioteca para interactuar con Redis
 import threading
 
 # Configuración MQTT
-BROKER = "10.1.2.151"
+BROKER = "mqtt"
 TOPIC_REQUEST = "upb/master/request"
 TOPIC_RESPONSE = "upb/master/response"
 
 # Configuración Redis
-REDIS_HOST = "10.1.2.151"
+#REDIS_HOST = "10.1.0.224"
+REDIS_HOST = "redis"
 REDIS_PORT = 6379
 redis_client = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
 
@@ -93,8 +94,8 @@ def on_message(client, userdata, msg):
 def serve_grpc(master):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     master_pb2_grpc.add_MasterServicer_to_server(master, server)
-    server.add_insecure_port("[::]:50051")
-    print("Servidor Master en ejecución en el puerto 50051")
+    server.add_insecure_port("[::]:8888")
+    print("Servidor Master en ejecución en el puerto 8888")
     server.start()
     server.wait_for_termination()
 
