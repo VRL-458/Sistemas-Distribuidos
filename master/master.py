@@ -63,7 +63,7 @@ def on_message(client, userdata, msg):
         redis_client.rpush(master.worker_list_key, worker_id)
         print(f"Worker ID {worker_id} reintegrado a la lista de disponibles.")
 			
-	queue.append(sensor_id)
+    queue.append(sensor_id)
 
 # Servidor gRPC
 def serve_grpc(master):
@@ -83,6 +83,8 @@ def start_mqtt(master):
     client.loop_start()
     return client
 
+
+
 if __name__ == "__main__":
     master_servicer = MasterServicer()
 
@@ -91,21 +93,21 @@ if __name__ == "__main__":
     grpc_thread.start()
 
     mqtt_client = start_mqtt(master_servicer)
-	
+    
     try:
         while True:
             if redis_client.llen(master_servicer.worker_list_key) > 0 and queue:
-				assigned_worker = redis_client.lpop(master_servicer.worker_list_key)
-				sensor_id = queue.pop(0)
-				print(f"Asignando Worker ID: {assigned_worker} al Sensor ID: {sensor_id}")
+                assigned_worker = redis_client.lpop(master_servicer.worker_list_key)
+                sensor_id = queue.pop(0)
+                print(f"Asignando Worker ID: {assigned_worker} al Sensor ID: {sensor_id}")
 
-				# Responder al ESP32 con el Worker ID asignado
-				response = {
-					"sensor_id": sensor_id,
-					"worker_id": assigned_worker
-				}
-				mqtt_client.publish(TOPIC_RESPONSE, json.dumps(response))
-			time.sleep(0.5)
-	except KeyboardInterrupt:
-		mqtt_client.loop_stop()
-		print("Programa terminado por el usuario.")
+                # Responder al ESP32 con el Worker ID asignado
+                response = {
+                    "sensor_id": sensor_id,
+                    "worker_id": assigned_worker
+                }
+                mqtt_client.publish(TOPIC_RESPONSE, json.dumps(response))
+            time.sleep(0.5)
+    except KeyboardInterrupt:
+        mqtt_client.loop_stop()
+        print("Programa terminado por el usuario.")
