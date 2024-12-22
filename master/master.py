@@ -18,23 +18,8 @@ REDIS_HOST = "redis"
 REDIS_PORT = 6379
 redis_client = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
 
-def connect_redis(self):
-    """Intentar conectar con Redis con reintentos."""
-    global redis_client
-    for _ in range(5):  # Reintentar hasta 5 veces
-        try:
-            redis_client = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
-            # Verificar la conexión con un comando PING
-            redis_client.ping()
-            print("Conectado exitosamente a Redis.")
-            break
-        except redis.ConnectionError as e:
-            print(f"Error al conectar con Redis: {e}. Reintentando en 3 segundos...")
-            time.sleep(3)
-    else:
-        print("No se pudo conectar a Redis después de varios intentos.")
-        # Aquí puedes definir una estrategia para seguir, como asignar un Worker predeterminado o salir
-
+# Cola de esp32
+queue = []
 
 # Clase MasterServicer para gRPC
 class MasterServicer(master_pb2_grpc.MasterServicer):
@@ -73,23 +58,12 @@ def on_message(client, userdata, msg):
 
     # Asignar un Worker ID si no existe uno asignado
 
-
     if worker_id != "":
         # Reinserta el Worker ID en la lista de Redis si está en uso
         redis_client.rpush(master.worker_list_key, worker_id)
         print(f"Worker ID {worker_id} reintegrado a la lista de disponibles.")
-    if redis_client.llen(master.worker_list_key) > 0:
-        assigned_worker = redis_client.lpop(master.worker_list_key)
-        print(f"Asignando Worker ID: {assigned_worker} al Sensor ID: {sensor_id}")
-
-        # Responder al ESP32 con el Worker ID asignado
-        response = {
-            "sensor_id": sensor_id,
-            "worker_id": assigned_worker
-        }
-        client.publish(TOPIC_RESPONSE, json.dumps(response))
-    else:
-        print("No hay Workers disponibles en este momento.")
+			
+	queue.append(sensor_id)
 
 # Servidor gRPC
 def serve_grpc(master):
@@ -106,7 +80,8 @@ def start_mqtt(master):
     client.on_connect = on_connect
     client.on_message = on_message
     client.connect(BROKER, 1883, 60)
-    client.loop_forever()
+    client.loop_start()
+    return client
 
 if __name__ == "__main__":
     master_servicer = MasterServicer()
@@ -115,5 +90,22 @@ if __name__ == "__main__":
     grpc_thread = threading.Thread(target=serve_grpc, args=(master_servicer,))
     grpc_thread.start()
 
-    # Iniciar MQTT
-    start_mqtt(master_servicer)
+    mqtt_client = start_mqtt(master_servicer)
+	
+    try:
+        while True:
+            if redis_client.llen(master_servicer.worker_list_key) > 0 and queue:
+				assigned_worker = redis_client.lpop(master_servicer.worker_list_key)
+				sensor_id = queue.pop(0)
+				print(f"Asignando Worker ID: {assigned_worker} al Sensor ID: {sensor_id}")
+
+				# Responder al ESP32 con el Worker ID asignado
+				response = {
+					"sensor_id": sensor_id,
+					"worker_id": assigned_worker
+				}
+				mqtt_client.publish(TOPIC_RESPONSE, json.dumps(response))
+			time.sleep(0.5)
+	except KeyboardInterrupt:
+		mqtt_client.loop_stop()
+		print("Programa terminado por el usuario.")
