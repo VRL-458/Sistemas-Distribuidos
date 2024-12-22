@@ -6,6 +6,7 @@ import paho.mqtt.client as mqtt
 import json
 import redis  # Biblioteca para interactuar con Redis
 import threading
+import time
 
 # Configuración MQTT
 BROKER = "mqtt"
